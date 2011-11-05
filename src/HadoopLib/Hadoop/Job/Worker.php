@@ -10,6 +10,18 @@ abstract class Worker {
     private static $_encoder;
 
     /**
+	 * @return mix
+	 */
+	protected function read() {
+		$result = fgets(STDIN);
+		if ($result !== false) {
+			return rtrim($result, "\n");
+		}
+
+		return false;
+	}
+
+    /**
      * @return void
      */
     abstract public function handle();

@@ -23,7 +23,7 @@ abstract class Reducer extends \HadoopLib\Hadoop\Job\Worker {
      */
     public function handle() {
         $result = $this->getEmptyResult();
-        while (($toReduce = fgets(STDIN)) !== false) {
+        while (($toReduce = $this->read()) !== false) {
             $result = $this->reduce($result, self::getEncoder()->decode($toReduce));
         }
 

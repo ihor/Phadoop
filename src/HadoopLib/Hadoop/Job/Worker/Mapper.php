@@ -14,7 +14,7 @@ abstract class Mapper extends \HadoopLib\Hadoop\Job\Worker {
      * @return void
      */
     public function handle() {
-        while (($task = fgets(STDIN)) !== false) {
+        while (($task = $this->read()) !== false) {
             echo self::getEncoder()->encode(call_user_func_array(
                 array($this, 'map'),
                 array(self::getEncoder()->decode($task))
