@@ -34,10 +34,10 @@ class InputIterator implements \Iterator {
     /**
      * @param \HadoopLib\Hadoop\Job\IO\Reader $reader
      */
-	public function __construct(\HadoopLib\Hadoop\Job\IO\Reader $reader) {
+    public function __construct(\HadoopLib\Hadoop\Job\IO\Reader $reader) {
         $this->setReader($reader);
-		$this->next();
-		$this->reset();
+        $this->next();
+        $this->reset();
 	}
 
     /**
