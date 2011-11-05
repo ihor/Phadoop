@@ -1,7 +1,13 @@
 <?php
+/**
+ * @author Ihor Burlachenko
+ */
 
 namespace HadoopLib\Hadoop;
 
+/**
+ * @see http://hadoop.apache.org/common/docs/r0.20.0/hdfs_shell.html
+ */
 class FileSystem {
 
     /**
@@ -19,7 +25,7 @@ class FileSystem {
     /**
      * @param string $cmd
      * @param string|array $args
-     * @return mix
+     * @return mixed
      */
     private function exec($cmd, $args)
     {
@@ -28,17 +34,17 @@ class FileSystem {
     /**
      * @param string|file $content Text content or path to file in local file system
      * @param string $filePath
-     * @return mix
+     * @return mixed
      */
     public function writeToFile($content, $filePath) {
         if (is_file($content)) {
             return $this->exec('put', array($content, $filePath));
         }
         elseif (is_string($content)) {
-            return $this->shell->exec('printf "' . str_replace('"', '\"', $content) . '" | %hadoop% dfs -put', array('-', $filePath));
+            return $this->shell->exec('printf "' . str_replace('"', '\"', str_replace('\\', '\\\\', $content)) . '" | %hadoop% dfs -put', array('-', $filePath));
         }
 
-        throw new \Exception(sprintf('Invalid content type "%s"'), is_object($content) ? get_class($content) : gettype($content));
+        throw new \Exception(sprintf('Invalid content type "%s"', is_object($content) ? get_class($content) : gettype($content)));
     }
 
     /**
@@ -46,7 +52,7 @@ class FileSystem {
      *
      * @param string $localFilePath
      * @param string $hdfsFilePath
-     * @return mix
+     * @return mixed
      */
     public function moveFromLocal($localFilePath, $hdfsFilePath) {
         return $this->exec('moveFromLocal', array($localFilePath, $hdfsFilePath));
@@ -55,7 +61,7 @@ class FileSystem {
     /**
      * @param string $hdfsFilePath
      * @param string $localFilePath
-     * @return mix
+     * @return mixed
      */
     public function copyToLocal($hdfsFilePath, $localFilePath) {
         return $this->exec('get', array($hdfsFilePath, $localFilePath));
@@ -64,7 +70,7 @@ class FileSystem {
     /**
      * @param string $hdfsPath
      * @param bool $recursive
-     * @return mix
+     * @return mixed
      */
     public function remove($hdfsPath, $recursive = false) {
         return $this->exec($recursive ? 'rmr' : 'rm', $hdfsPath);
@@ -77,6 +83,4 @@ class FileSystem {
     public function displayFileContent($hdfsFilePath) {
         return $this->exec('cat', $hdfsFilePath);
     }
-
-    // todo Add all hdfs commands
 }

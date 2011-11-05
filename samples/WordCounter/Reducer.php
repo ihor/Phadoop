@@ -5,20 +5,16 @@ namespace WordCounter;
 class Reducer extends \HadoopLib\Hadoop\Job\Worker\Reducer {
 
     /**
-     * @param int $result
-     * @param int $wordNumber
+     * @param string $key
+     * @param \Traversable $values
      * @return int
      */
-    protected function reduce($result, $wordNumber)
-    {
-        return (int) $result + (int) $wordNumber;
-    }
+    protected function reduce($key, \Traversable $values) {
+        $result = 0;
+        foreach ($values as $value) {
+            $result += (int) $value;
+        }
 
-    /**
-     * @return int
-     */
-    protected function getEmptyResult()
-    {
-        return 0;
+        $this->emit($key, $result);
     }
 }

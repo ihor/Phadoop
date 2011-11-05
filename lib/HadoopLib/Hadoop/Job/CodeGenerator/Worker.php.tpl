@@ -8,4 +8,5 @@ $classLoader->registerNamespace('%ProjectNamespaceName%', '%ProjectNamespacePath
 $classLoader->register();
 
 $worker = new %ProjectWorkerClassName%();
+%WorkerReflection%
 $worker->handle();

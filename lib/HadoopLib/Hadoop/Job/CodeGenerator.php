@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Ihor Burlachenko
+ */
 
 namespace HadoopLib\Hadoop\Job;
 
@@ -45,16 +48,16 @@ class CodeGenerator {
      * @return void
      */
     public function generateScript(Worker $worker, $outputFile) {
-        $script = file_get_contents("{$this->templatesPath}/Worker/Template.php.tpl");
+        $script = file_get_contents("{$this->templatesPath}/CodeGenerator/Worker.php.tpl");
 
-        $workerReflection = new \ReflectionClass($worker);
-        $workerClassName = $workerReflection->getName();
-        $projectNamespaceName = $workerReflection->getNamespaceName();
+        $workerReflectionClass = new \ReflectionClass($worker);
+        $workerClassName = $workerReflectionClass->getName();
+        $projectNamespaceName = $workerReflectionClass->getNamespaceName();
         if (false !== $slashPos = strpos('\\', $projectNamespaceName)) {
             $projectNamespaceName = substr($projectNamespaceName, 0, $slashPos);
         }
 
-        $workerFilePath = $workerReflection->getFileName();
+        $workerFilePath = $workerReflectionClass->getFileName();
         $projectNamespacePath = substr($workerFilePath, 0, strpos($workerFilePath, "/$projectNamespaceName"));
 
         $script = str_replace('%UniversalClassLoaderPath%', $this->universalClassLoaderPath, $script);
@@ -62,6 +65,17 @@ class CodeGenerator {
         $script = str_replace('%ProjectNamespaceName%', $projectNamespaceName, $script);
         $script = str_replace('%ProjectNamespacePath%', $projectNamespacePath, $script);
         $script = str_replace('%ProjectWorkerClassName%', $workerClassName, $script);
+
+        $workerReflectionObject = new \ReflectionObject($worker);
+        $reflectionCode = '';
+        foreach ($workerReflectionObject->getProperties(\ReflectionProperty::IS_PUBLIC) as $propertyReflection) {
+            if (empty($reflectionCode)) {
+                $reflectionCode = "\$reflection = new \\ReflectionObject(\$worker);\n";
+            }
+
+            $reflectionCode .= "\$worker->{$propertyReflection->getName()} = {$propertyReflection->getValue($worker)};\n";
+        }
+        $script = str_replace('%WorkerReflection%', $reflectionCode, $script);
 
         file_put_contents($outputFile, $script);
         chmod($outputFile, 0755); // Make the script executable

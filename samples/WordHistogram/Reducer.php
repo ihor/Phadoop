@@ -5,28 +5,16 @@ namespace WordHistogram;
 class Reducer extends \HadoopLib\Hadoop\Job\Worker\Reducer {
 
     /**
-     * @param array $histogram
-     * @param array $wordCounters
-     * @return array
+     * @param string $key
+     * @param \Traversable $values
+     * @return int
      */
-    protected function reduce($histogram, $wordCounters)
-    {
-        foreach ($wordCounters as $word => $count) {
-            if (!array_key_exists($word, $histogram)) {
-                $histogram[$word] = 0;
-            }
-
-            $histogram[$word] += $count;
+    protected function reduce($key, \Traversable $values) {
+        $sum = 0;
+        foreach ($values as $counts) {
+            $sum += (int) $counts;
         }
 
-        return $histogram;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getEmptyResult()
-    {
-        return array();
+        $this->emit($key, $sum);
     }
 }

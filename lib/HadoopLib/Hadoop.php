@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Ihor Burlachenko
+ */
 
 namespace HadoopLib;
 
@@ -32,9 +35,10 @@ class Hadoop {
 
     /**
      * @param string $jobName
+     * @param string $jobCacheDir
      * @return \HadoopLib\Hadoop\Job
      */
-    public function createJob($jobName) {
-        return new \HadoopLib\Hadoop\Job($jobName, $this->shell, $this->fileSystem);
+    public function createJob($jobName, $jobCacheDir) {
+        return new \HadoopLib\Hadoop\Job($jobName, $this->shell, $this->fileSystem, $jobCacheDir);
     }
 }

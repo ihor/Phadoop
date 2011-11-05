@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Ihor Burlachenko
+ */
 
 namespace HadoopLib\Hadoop;
 
@@ -50,17 +53,13 @@ class Job {
     private $_codeGenerator;
 
     /**
-     * @var \HadoopLib\Hadoop\Job\Encoder
-     */
-    private $_encoder;
-
-    /**
      * @param string $name
      * @param \HadoopLib\Hadoop\Shell $shell
      * @param \HadoopLib\Hadoop\FileSystem $fileSystem
+     * @param string $cacheDir
      * @return \HadoopLib\Hadoop\Job
      */
-    public function __construct($name, Shell $shell, FileSystem $fileSystem) {
+    public function __construct($name, Shell $shell, FileSystem $fileSystem, $cacheDir) {
         if (empty($name)) {
             throw new \InvalidArgumentException("Job name can't be empty");
         }
@@ -69,6 +68,7 @@ class Job {
         $this->shell = $shell;
         $this->fileSystem = $fileSystem;
         $this->taskCounter = 0;
+        $this->setCacheDir($cacheDir);
     }
 
     /**
@@ -76,7 +76,7 @@ class Job {
      * @param string $cacheDir
      * @return \HadoopLib\Hadoop\Job
      */
-    public function setCacheDir($cacheDir) {
+    private function setCacheDir($cacheDir) {
         if (!file_exists($cacheDir)) {
             mkdir($cacheDir, 0777);
         }
@@ -94,7 +94,6 @@ class Job {
      */
     public function setMapper(Job\Worker\Mapper $mapper) {
         $this->mapper = $mapper;
-        $this->mapper->setEncoder($this->getEncoder());
         return $this;
     }
 
@@ -104,14 +103,13 @@ class Job {
      */
     public function setReducer(Job\Worker\Reducer $reducer) {
         $this->reducer = $reducer;
-        $this->reducer->setEncoder($this->getEncoder());
         return $this;
     }
 
     /**
      * @return \HadoopLib\Hadoop\Job
      */
-    public function clearJobData() {
+    public function clearData() {
         $this->fileSystem->remove($this->name, true);
         return $this;
     }
@@ -128,7 +126,7 @@ class Job {
             $this->fileSystem->moveFromLocal($this->encodeTaskFromFile($task), $taskHdfsFilePath);
         }
         else {
-            $this->fileSystem->writeToFile($this->getEncoder()->encode($task), $taskHdfsFilePath);
+            $this->fileSystem->writeToFile(Job\IO\Encoder::encode($task), $taskHdfsFilePath);
         }
 
         return $this;
@@ -148,19 +146,8 @@ class Job {
         }
 
         $encodedTaskLocalFilePath = "$encodedTasksDir/{$this->taskCounter}.tsk";
-        file_put_contents($encodedTaskLocalFilePath, $this->getEncoder()->encode($content));
+        file_put_contents($encodedTaskLocalFilePath, Job\IO\Encoder::encode($content));
         return $encodedTaskLocalFilePath;
-    }
-
-    /**
-     * @return \HadoopLib\Hadoop\Job\Encoder
-     */
-    private function getEncoder() {
-        if (is_null($this->_encoder)) {
-            $this->_encoder = new Job\Encoder();
-        }
-
-        return $this->_encoder;
     }
 
     /**
@@ -181,7 +168,7 @@ class Job {
      * @param string $localFilePath
      * @return \HadoopLib\Hadoop\Job
      */
-    public function setResultsFileLocalPath($localFilePath) {
+    public function putResultsTo($localFilePath) {
         $this->resultsFileLocalPath = (string) $localFilePath;
         return $this;
     }

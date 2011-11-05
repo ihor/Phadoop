@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Ihor Burlachenko
+ */
 
 namespace HadoopLib\Hadoop;
 

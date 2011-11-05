@@ -1,6 +1,9 @@
 <?php
+/**
+ * @author Ihor Burlachenko
+ */
 
-namespace HadoopLib\Hadoop\Job;
+namespace HadoopLib\Hadoop\Job\IO;
 
 class Encoder {
 

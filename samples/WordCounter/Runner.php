@@ -2,20 +2,19 @@
 
 namespace WordCounter;
 
-require_once '../../src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+require_once '../../lib/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
-$classLoader->registerNamespace('HadoopLib', '../../src');
+$classLoader->registerNamespace('HadoopLib', '../../lib');
 $classLoader->registerNamespace('WordCounter', '../');
 $classLoader->register();
 
 $hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
 
-$hadoop->createJob('WordCounter')
-    ->setCacheDir('Temp')
+$hadoop->createJob('WordCounter', 'Temp')
     ->setMapper(new Mapper())
     ->setReducer(new Reducer())
-    ->clearJobData()
+    ->clearData()
     ->addTask('Hello World')
     ->addTask('Hello Hadoop')
-    ->setResultsFileLocalPath('Temp/Results.txt')
+    ->putResultsTo('Temp/Results.txt')
     ->run(true);
