@@ -8,7 +8,7 @@ $classLoader->registerNamespace('HadoopLib', '../../src');
 $classLoader->registerNamespace('WordCounter', '../');
 $classLoader->register();
 
-$hadoop = new \HadoopLib\Hadoop('/usr/local/hadoop');
+$hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
 
 $hadoop->createJob('WordCounter')
     ->setCacheDir('Temp')
