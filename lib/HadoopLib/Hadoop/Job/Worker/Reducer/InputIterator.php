@@ -29,7 +29,7 @@ class InputIterator implements \Iterator {
     /**
      * @var mixed
      */
-	private $currentValue;
+    private $currentValue;
 
     /**
      * @param \HadoopLib\Hadoop\Job\IO\Reader $reader
