@@ -76,20 +76,20 @@ abstract class Worker {
 
     /**
      * @static
-     * @param \HadoopLib\Hadoop\Job\Worker\Debugger $debugger
+     * @param \HadoopLib\Hadoop\Job\Debugger $debugger
      * @return \HadoopLib\Hadoop\Job\Worker
      */
-    public function setDebugger(Worker\Debugger $debugger) {
+    public function setDebugger(Debugger $debugger) {
         $this->_debugger = $debugger;
         return $this;
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job\Worker\Debugger
+     * @return \HadoopLib\Hadoop\Job\Debugger
      */
     private function getDebugger() {
         if (is_null($this->_debugger)) {
-            $this->_debugger = new Worker\Debugger();
+            $this->_debugger = new Debugger();
         }
 
         return $this->_debugger;
