@@ -5,6 +5,9 @@
 
 namespace HadoopLib\Hadoop;
 
+/**
+ * @see http://hadoop.apache.org/common/docs/r0.15.2/streaming.html
+ */
 class Job {
 
     /**
@@ -187,7 +190,6 @@ class Job {
 
         /**
          * @todo Populate mapper, reducer & other code to all Hadoop nodes
-         * @todo Maybe pack everything in phar
          */
 
         $this->shell->exec('jar', array(
@@ -261,7 +263,6 @@ class Job {
     }
 
     /**
-     * @todo Return all results (this method will not work for all situations)
      * @return string
      */
     private function displayResults() {
@@ -270,6 +271,7 @@ class Job {
     }
 
     /**
+     * @todo Return all results
      * @return string
      */
     private function getResultsFileHdfsPath() {
