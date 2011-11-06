@@ -21,14 +21,14 @@ abstract class Reducer extends \HadoopLib\Hadoop\Job\Worker {
     public function handle() {
         $inputIterator = new Reducer\InputIterator($this->getReader());
         while (!$inputIterator->isIterated()) {
-			$this->reduce($inputIterator->key(), $inputIterator);
+            $this->reduce($inputIterator->key(), $inputIterator);
 
             // Read to the next key
-			while ($inputIterator->valid()) {
-				$inputIterator->next();
-			}
+            while ($inputIterator->valid()) {
+                $inputIterator->next();
+            }
 
-			$inputIterator->reset();
-		}
+            $inputIterator->reset();
+        }
     }
 }
