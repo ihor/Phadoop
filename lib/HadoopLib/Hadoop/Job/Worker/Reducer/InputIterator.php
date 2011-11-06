@@ -38,7 +38,7 @@ class InputIterator implements \Iterator {
         $this->setReader($reader);
         $this->next();
         $this->reset();
-	}
+    }
 
     /**
      * @param \HadoopLib\Hadoop\Job\IO\Reader $reader
@@ -54,18 +54,18 @@ class InputIterator implements \Iterator {
      *
      * @return void
      */
-	public function reset() {
-		$this->previousKey = $this->currentKey;
-	}
+    public function reset() {
+        $this->previousKey = $this->currentKey;
+    }
 
     /**
      * Checks if input is processed
      *
      * @return bool
      */
-	public function isIterated() {
-		return is_null($this->currentKey);
-	}
+    public function isIterated() {
+        return is_null($this->currentKey);
+    }
     
     /**
      * @return mixed
@@ -79,47 +79,47 @@ class InputIterator implements \Iterator {
      * 
      * @return mixed
      */
-	public function current() {
-		return $this->currentValue;
-	}
+    public function current() {
+        return $this->currentValue;
+    }
 
     /**
      * Returns current key
      * 
      * @return string
      */
-	public function key() {
+    public function key() {
         if (is_null($this->currentKey)) {
             return null;
         }
 
-		return (string) $this->currentKey;
-	}
+        return (string) $this->currentKey;
+    }
 
     /**
      * @return void
      */
-	public function next() {
-		$this->currentKey = null;
+    public function next() {
+        $this->currentKey = null;
         $this->currentValue = null;
 
         if (false !== $input = $this->reader->read()) {
             $this->currentKey = $input->getKey();
             $this->currentValue = $input->getValue();
         }
-	}
+    }
 
     /**
      * @return void
      */
-	public function rewind() {}
+    public function rewind() {}
 
     /**
      * Iterator is valid until we read another key
      *
      * @return bool
      */
-	public function valid() {
+    public function valid() {
         return $this->currentKey == $this->previousKey;
-	}
+    }
 }
