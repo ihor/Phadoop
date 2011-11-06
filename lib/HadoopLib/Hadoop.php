@@ -30,7 +30,7 @@ class Hadoop {
     public function __construct($hadoopPath) {
         $this->hadoopPath = (string) $hadoopPath;
         $this->shell = new Hadoop\Shell($this->hadoopPath);
-        $this->fileSystem = new \HadoopLib\Hadoop\FileSystem($this->shell);
+        $this->fileSystem = new Hadoop\FileSystem($this->shell);
     }
 
     /**
@@ -39,6 +39,6 @@ class Hadoop {
      * @return \HadoopLib\Hadoop\Job
      */
     public function createJob($jobName, $jobCacheDir) {
-        return new \HadoopLib\Hadoop\Job($jobName, $this->shell, $this->fileSystem, $jobCacheDir);
+        return new Hadoop\Job($jobName, $this->shell, $this->fileSystem, $jobCacheDir);
     }
 }
