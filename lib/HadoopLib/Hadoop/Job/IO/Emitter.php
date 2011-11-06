@@ -17,7 +17,7 @@ class Emitter {
      * @param mixed $value
      * @return void
      */
-	public function emit($key, $value) {
+    public function emit($key, $value) {
         $output = Data\Output::create($key, $value);
         echo $output . "\n";
 
