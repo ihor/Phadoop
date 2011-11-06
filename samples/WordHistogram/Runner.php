@@ -8,13 +8,13 @@ $classLoader->registerNamespace('HadoopLib', '../../lib');
 $classLoader->registerNamespace('WordHistogram', '../');
 $classLoader->register();
 
+//define('HADOOP_LIB_DEBUG', true);
+
 $hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
 
 $hadoop->createJob('WordHistogram', 'Temp')
     ->setMapper(new Mapper())
-    //->setMapper(Mapper::create()->turnOnDebugMode())
     ->setReducer(new Reducer())
-    //->setReducer(Reducer::create()->turnOnDebugMode())
     ->clearData()
     ->addTask('Hello World')
     ->addTask('Hello Hadoop')

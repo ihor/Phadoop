@@ -60,22 +60,12 @@ class CodeGenerator {
         $workerFilePath = $workerReflectionClass->getFileName();
         $projectNamespacePath = substr($workerFilePath, 0, strpos($workerFilePath, "/$projectNamespaceName"));
 
+        $script = str_replace('%HadoopLibDebug%', defined('HADOOP_LIB_DEBUG') && HADOOP_LIB_DEBUG ? 'true' : 'false', $script);
         $script = str_replace('%UniversalClassLoaderPath%', $this->universalClassLoaderPath, $script);
         $script = str_replace('%HadoopLibPath%', $this->hadoopLibPath, $script);
         $script = str_replace('%ProjectNamespaceName%', $projectNamespaceName, $script);
         $script = str_replace('%ProjectNamespacePath%', $projectNamespacePath, $script);
         $script = str_replace('%ProjectWorkerClassName%', $workerClassName, $script);
-
-        $workerReflectionObject = new \ReflectionObject($worker);
-        $reflectionCode = '';
-        foreach ($workerReflectionObject->getProperties(\ReflectionProperty::IS_PUBLIC) as $propertyReflection) {
-            if (empty($reflectionCode)) {
-                $reflectionCode = "\$reflection = new \\ReflectionObject(\$worker);\n";
-            }
-
-            $reflectionCode .= "\$worker->{$propertyReflection->getName()} = {$propertyReflection->getValue($worker)};\n";
-        }
-        $script = str_replace('%WorkerReflection%', $reflectionCode, $script);
 
         file_put_contents($outputFile, $script);
         chmod($outputFile, 0755); // Make the script executable

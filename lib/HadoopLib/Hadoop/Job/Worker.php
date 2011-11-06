@@ -18,23 +18,9 @@ abstract class Worker {
     private static $_emitter;
 
     /**
-     * @var bool
-     */
-    public $inDebugMode = false;
-
-    /**
      * @var \HadoopLib\Hadoop\Job\Worker\Debugger
      */
     private $_debugger;
-
-    /**
-     * @static
-     * @return \HadoopLib\Hadoop\Job\Worker
-     */
-    public static function create() {
-        $className = get_called_class();
-        return new $className();
-    }
 
     /**
      * @static
@@ -77,14 +63,6 @@ abstract class Worker {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job\Worker
-     */
-    public function turnOnDebugMode() {
-        $this->inDebugMode = true;
-        return $this;
-    }
-
-    /**
      * @static
      * @param \HadoopLib\Hadoop\Job\Debugger $debugger
      * @return \HadoopLib\Hadoop\Job\Worker
@@ -106,6 +84,13 @@ abstract class Worker {
     }
 
     /**
+     * @return bool
+     */
+    protected function isInDebugMode() {
+        return defined('HADOOP_LIB_DEBUG') && HADOOP_LIB_DEBUG;
+    }
+
+    /**
      * @return void
      */
     abstract public function handle();
@@ -119,7 +104,7 @@ abstract class Worker {
     protected function emit($key, $value) {
         self::getEmitter()->emit($key, $value);
 
-        if ($this->inDebugMode) {
+        if ($this->isInDebugMode()) {
             $this->getDebugger()->logEmit($this, self::getEmitter()->getLast());
         }
     }
