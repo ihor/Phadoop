@@ -11,8 +11,8 @@ class Reducer extends \HadoopLib\Hadoop\Job\Worker\Reducer {
      */
     protected function reduce($key, \Traversable $values) {
         $sum = 0;
-        foreach ($values as $counts) {
-            $sum += (int) $counts;
+        foreach ($values as $count) {
+            $sum += (int) $count;
         }
 
         $this->emit($key, $sum);
