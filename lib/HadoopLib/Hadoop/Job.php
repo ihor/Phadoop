@@ -144,39 +144,44 @@ class Job {
     }
 
     /**
-     * @todo Support adding tasks from file also
-     * @param mixed $task
+     * @param string $key
+     * @param mixed $data If empty then key is data
      * @return \HadoopLib\Hadoop\Job
      */
-    public function addTask($task) {
+    public function addTask($key, $data = null) {
+        if (is_null($data)) {
+            $data = $key;
+            $key = null;
+        }
+
         $this->taskCounter++;
         $taskHdfsFilePath = "{$this->getHdfsTasksDir()}/{$this->taskCounter}.tsk";
-        if (is_file($task)) {
-            $this->fileSystem->moveFromLocal($this->encodeTaskFromFile($task), $taskHdfsFilePath);
+        if (is_file($data)) {
+            $this->fileSystem->moveFromLocal($this->prepareTaskFromFile($key, $data), $taskHdfsFilePath);
         }
         else {
-            $this->fileSystem->writeToFile(Job\IO\Encoder::encode($task), $taskHdfsFilePath);
+            $this->fileSystem->writeToFile(new Job\IO\Data\Output($key, $data), $taskHdfsFilePath);
         }
 
         return $this;
     }
 
     /**
+     * @param string $key
      * @param string $localFilePath
      * @return string
      */
-    private function encodeTaskFromFile($localFilePath) {
-        $content = file_get_contents($localFilePath);
-
-        $encodedTasksDir = "{$this->cacheDir}/Tasks";
-        if (!is_dir($encodedTasksDir)) {
-            mkdir($encodedTasksDir);
-            chmod($encodedTasksDir, 0766);
+    private function prepareTaskFromFile($key, $localFilePath) {
+        $tasksDir = "{$this->cacheDir}/Tasks";
+        if (!is_dir($tasksDir)) {
+            mkdir($tasksDir);
+            chmod($tasksDir, 0766);
         }
 
-        $encodedTaskLocalFilePath = "$encodedTasksDir/{$this->taskCounter}.tsk";
-        file_put_contents($encodedTaskLocalFilePath, Job\IO\Encoder::encode($content));
-        return $encodedTaskLocalFilePath;
+        $taskLocalFilePath = "$tasksDir/{$this->taskCounter}.tsk";
+        file_put_contents($taskLocalFilePath, new Job\IO\Data\Output($key, file_get_contents($localFilePath)));
+
+        return $taskLocalFilePath;
     }
 
     /**

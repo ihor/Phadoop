@@ -40,7 +40,12 @@ class FileSystem {
         if (is_file($content)) {
             return $this->exec('put', array($content, $filePath));
         }
-        elseif (is_string($content)) {
+
+        if (!is_string($content) && method_exists($content, '__toString')) {
+            $content = $content->__toString();
+        }
+        
+        if (is_string($content)) {
             return $this->shell->exec('printf "' . str_replace('"', '\"', str_replace('\\', '\\\\', $content)) . '" | %hadoop% dfs -put', array('-', $filePath));
         }
 
