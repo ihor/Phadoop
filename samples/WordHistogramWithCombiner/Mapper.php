@@ -1,6 +1,6 @@
 <?php
 
-namespace WordHistogram;
+namespace WordHistogramWithCombiner;
 
 class Mapper extends \HadoopLib\Hadoop\Job\Worker\Mapper {
 

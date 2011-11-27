@@ -86,8 +86,16 @@ abstract class Worker {
     /**
      * @return bool
      */
-    protected function isInDebugMode() {
+    private function isInDebugMode() {
         return defined('HADOOP_LIB_DEBUG') && HADOOP_LIB_DEBUG;
+    }
+
+    /**
+     * @param \HadoopLib\Hadoop\Job\Worker $worker
+     * @return bool
+     */
+    public function isEqualTo(Worker $worker) {
+        return get_class($this) === get_class($worker);
     }
 
     /**

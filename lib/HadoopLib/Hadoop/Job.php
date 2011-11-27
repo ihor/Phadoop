@@ -36,6 +36,11 @@ class Job {
     private $reducer;
 
     /**
+     * @var \HadoopLib\Hadoop\Job\Worker
+     */
+    private $combiner;
+
+    /**
      * @var string
      */
     private $cacheDir;
@@ -107,6 +112,22 @@ class Job {
     public function setReducer(Job\Worker\Reducer $reducer) {
         $this->reducer = $reducer;
         return $this;
+    }
+
+    /**
+     * @param \HadoopLib\Hadoop\Job\Worker $combiner
+     * @return \HadoopLib\Hadoop\Job
+     */
+    public function setCombiner(Job\Worker $combiner) {
+        $this->combiner = $combiner;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    private function hasCombiner() {
+        return !is_null($this->combiner);
     }
 
     /**
@@ -192,16 +213,28 @@ class Job {
          * @todo Populate mapper, reducer & other code to all Hadoop nodes
          */
 
-        $this->shell->exec('jar', array(
+        $jobParams = array(
             $this->getHadoopStreamingJarPath(),
             'mapper' => $this->cacheDir . '/Mapper.php',
             'reducer' => $this->cacheDir . '/Reducer.php',
             'input' => $this->name . '/tasks/*',
             'output' => $this->name . '/results',
-            'file' => $this->cacheDir . '/Mapper.php',
-            'file' => $this->cacheDir . '/Reducer.php',
+            /*'file' => $this->cacheDir . '/Mapper.php',
+            'file' => $this->cacheDir . '/Reducer.php',*/
             'jobconf' => 'mapred.output.compress=false'
-        ));
+        );
+
+        if ($this->hasCombiner()) {
+            if ($this->combiner->isEqualTo($this->reducer)) {
+                $jobParams['combiner'] = $this->cacheDir . '/Reducer.php';
+            }
+            else {
+                $this->getCodeGenerator()->generateScript($this->combiner, $this->cacheDir . '/Combiner.php');
+                $jobParams['combiner'] = $this->cacheDir . '/Combiner.php';
+            }
+        }
+
+        $this->shell->exec('jar', $jobParams);
 
         if ($displayResults) {
             $this->displayResults();
