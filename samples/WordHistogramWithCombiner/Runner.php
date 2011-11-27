@@ -20,7 +20,7 @@ $hadoop->createJob('WordHistogramWithCombiner', 'Temp')
     ->addTask('Hello World')
     ->addTask('Hello Hadoop')
     ->addTask('Hello combiner')
-    ->addTask('This phrase demonstrates usage of combiner, combiner, combiner, combiner, combiner...')
+    ->addTask('This phrase demonstrates how combiner works: combiner, combiner, combiner, combiner, combiner...')
     //->addTask('Tasks/MapReduceTutorial.txt')
     ->putResultsTo('Temp/Results.txt')
     ->run(true);
