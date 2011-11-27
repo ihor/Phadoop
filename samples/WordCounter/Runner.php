@@ -12,11 +12,13 @@ $classLoader->register();
 
 $hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
 
-$hadoop->createJob('WordCounter', 'Temp')
+$job = $hadoop->createJob('WordCounter', 'Temp')
     ->setMapper(new Mapper())
     ->setReducer(new Reducer())
     ->clearData()
     ->addTask('Hello World')
     ->addTask('Hello Hadoop')
     ->putResultsTo('Temp/Results.txt')
-    ->run(true);
+    ->run();
+
+echo $job->getLastResults();

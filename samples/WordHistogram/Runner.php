@@ -12,7 +12,7 @@ $classLoader->register();
 
 $hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
 
-$hadoop->createJob('WordHistogram', 'Temp')
+$job = $hadoop->createJob('WordHistogram', 'Temp')
     ->setMapper(new Mapper())
     ->setReducer(new Reducer())
     ->clearData()
@@ -20,4 +20,6 @@ $hadoop->createJob('WordHistogram', 'Temp')
     ->addTask('Hello Hadoop')
     //->addTask('Tasks/MapReduceTutorial.txt')
     ->putResultsTo('Temp/Results.txt')
-    ->run(true);
+    ->run();
+
+echo $job->getLastResults();

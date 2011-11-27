@@ -12,7 +12,7 @@ $classLoader->register();
 
 $hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
 
-$hadoop->createJob('WordHistogramWithCombiner', 'Temp')
+$job = $hadoop->createJob('WordHistogramWithCombiner', 'Temp')
     ->setMapper(new Mapper())
     ->setReducer(new Reducer())
     ->setCombiner(new Combiner())
@@ -23,4 +23,6 @@ $hadoop->createJob('WordHistogramWithCombiner', 'Temp')
     ->addTask('This phrase demonstrates how combiner works: combiner, combiner, combiner, combiner, combiner...')
     //->addTask('Tasks/MapReduceTutorial.txt')
     ->putResultsTo('Temp/Results.txt')
-    ->run(true);
+    ->run();
+
+echo $job->getLastResults();

@@ -56,6 +56,11 @@ class Job {
     private $resultsFileLocalPath;
 
     /**
+     * @var string
+     */
+    private $lastResults;
+
+    /**
      * @var \HadoopLib\Hadoop\Job\CodeGenerator
      */
     private $_codeGenerator;
@@ -198,10 +203,9 @@ class Job {
     }
 
     /**
-     * @param bool $displayResults
-     * @return void
+     * @return \HadoopLib\Hadoop\Job
      */
-    public function run($displayResults = false) {
+    public function run() {
         $this->assertCacheDirIsSet();
         $this->assertMapperIsSet();
         $this->assertReducerIsSet();
@@ -219,8 +223,6 @@ class Job {
             'reducer' => $this->cacheDir . '/Reducer.php',
             'input' => $this->name . '/tasks/*',
             'output' => $this->name . '/results',
-            /*'file' => $this->cacheDir . '/Mapper.php',
-            'file' => $this->cacheDir . '/Reducer.php',*/
             'jobconf' => 'mapred.output.compress=false'
         );
 
@@ -235,15 +237,9 @@ class Job {
         }
 
         $this->shell->exec('jar', $jobParams);
+        $this->rememberResults();
 
-        if ($displayResults) {
-            $this->displayResults();
-        }
-
-        if (!is_null($this->resultsFileLocalPath)) {
-            system("rm {$this->resultsFileLocalPath}");
-            $this->fileSystem->copyToLocal($this->getResultsFileHdfsPath(), $this->resultsFileLocalPath);
-        }
+        return $this;
     }
 
     /**
@@ -296,18 +292,33 @@ class Job {
     }
 
     /**
-     * @return string
-     */
-    private function displayResults() {
-        echo "Results:\n";
-        $this->fileSystem->displayFileContent($this->getResultsFileHdfsPath());
-    }
-
-    /**
      * @todo Return all results
      * @return string
      */
     private function getResultsFileHdfsPath() {
         return "{$this->getHdfsResultsDir()}/part-00000";
+    }
+
+    /**
+     * @return \HadoopLib\Hadoop\Job
+     */
+    private function rememberResults() {
+        $resultsFile = $this->resultsFileLocalPath;
+        if (is_null($resultsFile)) {
+            $resultsFile = $this->cacheDir . '/Results.txt';
+        }
+
+        system("rm $resultsFile");
+        $this->fileSystem->copyToLocal($this->getResultsFileHdfsPath(), $resultsFile);
+        $this->lastResults = file_get_contents($resultsFile);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastResults() {
+        return $this->lastResults;
     }
 }
