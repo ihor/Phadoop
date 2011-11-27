@@ -1,0 +1,20 @@
+<?php
+
+namespace WordHistogramWithSorting;
+
+class HistogramMapper extends \HadoopLib\Hadoop\Job\Worker\Mapper {
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    protected function map($key, $value) {
+        $content = strtolower(trim($value));
+        $words = preg_split('/\W/', $content, 0, PREG_SPLIT_NO_EMPTY);
+
+        foreach ($words as $word) {
+            $this->emit($word, 1);
+        }
+    }
+}
