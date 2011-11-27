@@ -213,10 +213,6 @@ class Job {
         $this->getCodeGenerator()->generateScript($this->mapper, $this->cacheDir . '/Mapper.php');
         $this->getCodeGenerator()->generateScript($this->reducer, $this->cacheDir . '/Reducer.php');
 
-        /**
-         * @todo Populate mapper, reducer & other code to all Hadoop nodes
-         */
-
         $jobParams = array(
             $this->getHadoopStreamingJarPath(),
             'mapper' => $this->cacheDir . '/Mapper.php',
@@ -227,14 +223,13 @@ class Job {
         );
 
         if ($this->hasCombiner()) {
-            if ($this->combiner->isEqualTo($this->reducer)) {
-                $jobParams['combiner'] = $this->cacheDir . '/Reducer.php';
-            }
-            else {
-                $this->getCodeGenerator()->generateScript($this->combiner, $this->cacheDir . '/Combiner.php');
-                $jobParams['combiner'] = $this->cacheDir . '/Combiner.php';
-            }
+            $this->getCodeGenerator()->generateScript($this->combiner, $this->cacheDir . '/Combiner.php');
+            $jobParams['combiner'] = $this->cacheDir . '/Combiner.php';
         }
+
+        /**
+         * @todo Populate mapper, reducer, combiner & other code to all Hadoop nodes
+         */
 
         $this->shell->exec('jar', $jobParams);
         $this->rememberResults();
