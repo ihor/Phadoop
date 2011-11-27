@@ -8,6 +8,8 @@ $classLoader->registerNamespace('HadoopLib', '../../lib');
 $classLoader->registerNamespace('WordCounter', '../');
 $classLoader->register();
 
+//define('HADOOP_LIB_DEBUG', true);
+
 $hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
 
 $hadoop->createJob('WordCounter', 'Temp')
