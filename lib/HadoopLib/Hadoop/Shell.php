@@ -43,7 +43,7 @@ class Shell {
      */
     private function prepareCmd($cmd)
     {
-        $result = (string)$cmd;
+        $result = (string) $cmd;
         if (strpos($result, '%hadoop%') === false) {
             $result = "{$this->hadoopPath}/bin/hadoop $result";
         }

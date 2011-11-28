@@ -10,7 +10,7 @@ abstract class Data {
     /**
      * @const string
      */
-    const EMPTY_KEY = 'empty';
+    const DEFAULT_KEY = 0;
 
     /**
      * Default key-value delimiter for the Hadoop streaming
@@ -52,5 +52,28 @@ abstract class Data {
         }
 
         return self::$_encoder;
+    }
+
+    /**
+     * @var string
+     */
+    protected $key;
+
+    /**
+     * @var mixed
+     */
+    protected $value;
+
+    /**
+     * @param string $key
+     * @param mix $value
+     */
+    protected function __construct($key, $value) {
+        if (is_null($key)) {
+            $key = self::DEFAULT_KEY;
+        }
+
+        $this->key = (string) $key;
+        $this->value = $value;
     }
 }

@@ -160,7 +160,7 @@ class Job {
             $this->fileSystem->moveFromLocal($this->prepareTaskFromFile($key, $data), $taskHdfsFilePath);
         }
         else {
-            $this->fileSystem->writeToFile(new Job\IO\Data\Output($key, $data), $taskHdfsFilePath);
+            $this->fileSystem->writeToFile(Job\IO\Data\Output::create($key, $data), $taskHdfsFilePath);
         }
 
         return $this;
@@ -179,7 +179,7 @@ class Job {
         }
 
         $taskLocalFilePath = "$tasksDir/{$this->taskCounter}.tsk";
-        file_put_contents($taskLocalFilePath, new Job\IO\Data\Output($key, file_get_contents($localFilePath)));
+        file_put_contents($taskLocalFilePath, Job\IO\Data\Output::create($key, file_get_contents($localFilePath)));
 
         return $taskLocalFilePath;
     }
@@ -220,11 +220,11 @@ class Job {
 
         $jobParams = array(
             $this->getHadoopStreamingJarPath(),
-            'mapper' => $this->cacheDir . '/Mapper.php',
-            'reducer' => $this->cacheDir . '/Reducer.php',
+            '-D mapred.output.compress=false',
             'input' => $this->name . '/tasks/*',
             'output' => $this->name . '/results',
-            'jobconf' => 'mapred.output.compress=false'
+            'mapper' => $this->cacheDir . '/Mapper.php',
+            'reducer' => $this->cacheDir . '/Reducer.php',
         );
 
         if ($this->hasCombiner()) {
