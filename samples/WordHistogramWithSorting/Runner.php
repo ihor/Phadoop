@@ -8,7 +8,7 @@ $classLoader->registerNamespace('HadoopLib', '../../lib');
 $classLoader->registerNamespace('WordHistogramWithSorting', '../');
 $classLoader->register();
 
-//define('HADOOP_LIB_DEBUG', true);
+define('HADOOP_LIB_DEBUG', true);
 
 $hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
 
@@ -30,6 +30,8 @@ $sortingJob = $hadoop->createJob('WordHistogramWithSorting/SortingStep', 'Temp/S
     ->setMapper(new SortingMapper())
     ->setReducer(new SortingReducer())
     ->clearData()
+    ->setStreamingOption('mapred.output.key.comparator.class', 'org.apache.hadoop.mapred.lib.KeyFieldBasedComparator')
+    ->setStreamingOption('mapred.text.key.comparator.options', '-k1nr')
     ->putResultsTo('Temp/SortedResults.txt');
 
 $sortingTasks = explode("\n", trim($wordHistogramJob->getLastResults()));
