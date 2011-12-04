@@ -87,6 +87,7 @@ class Job {
         $this->fileSystem = $fileSystem;
         $this->taskCounter = 0;
         $this->setCacheDir($cacheDir);
+        $this->streamingOptions = array();
     }
 
     /**
