@@ -41,6 +41,11 @@ class Job {
     private $combiner;
 
     /**
+     * @var array
+     */
+    private $streamingOptions;
+
+    /**
      * @var string
      */
     private $cacheDir;
@@ -208,6 +213,16 @@ class Job {
     }
 
     /**
+     * @param string $option
+     * @param string $value
+     * @return \HadoopLib\Hadoop\Job
+     */
+    public function setStreamingOption($option, $value) {
+        $this->streamingOptions[(string) $option] = (string) $value;
+        return $this;
+    }
+
+    /**
      * @return \HadoopLib\Hadoop\Job
      */
     public function run() {
@@ -218,14 +233,17 @@ class Job {
         $this->getCodeGenerator()->generateScript($this->mapper, $this->cacheDir . '/Mapper.php');
         $this->getCodeGenerator()->generateScript($this->reducer, $this->cacheDir . '/Reducer.php');
 
-        $jobParams = array(
-            $this->getHadoopStreamingJarPath(),
-            '-D mapred.output.compress=false',
+        $jobParams = array($this->getHadoopStreamingJarPath(), '-D mapred.output.compress=false');
+        foreach ($this->streamingOptions as $option => $value) {
+            $jobParams[] = "-D $option=$value";
+        }
+
+        $jobParams = array_merge($jobParams, array(
             'input' => $this->name . '/tasks/*',
             'output' => $this->name . '/results',
             'mapper' => $this->cacheDir . '/Mapper.php',
             'reducer' => $this->cacheDir . '/Reducer.php',
-        );
+        ));
 
         if ($this->hasCombiner()) {
             $this->getCodeGenerator()->generateScript($this->combiner, $this->cacheDir . '/Combiner.php');
