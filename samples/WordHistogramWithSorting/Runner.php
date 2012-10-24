@@ -22,7 +22,7 @@ $wordHistogramJob = $hadoop->createJob('WordHistogramWithSorting/HistogramStep',
     ->addTask('Hello Hadoop is much better than Hello World')
     ->addTask('Hello combiner')
     ->addTask('This phrase demonstrates how combiner works: combiner, combiner, combiner, combiner, combiner...')
-    //->addTask('Tasks/MapReduceTutorial.txt')
+    ->addTask('Tasks/MapReduceTutorial.txt')
     ->putResultsTo('Temp/Results.txt')
     ->run();
 
