@@ -8,8 +8,8 @@ namespace Phadoop\MapReduce;
 /**
  * @see http://hadoop.apache.org/common/docs/r0.20.0/hdfs_shell.html
  */
-class FileSystem {
-
+class FileSystem
+{
     /**
      * @var \Phadoop\MapReduce\Shell
      */
@@ -18,7 +18,8 @@ class FileSystem {
     /**
      * @param \Phadoop\MapReduce\Shell $shell
      */
-    public function __construct(Shell $shell) {
+    public function __construct(Shell $shell)
+    {
         $this->shell = $shell;
     }
 
@@ -31,12 +32,15 @@ class FileSystem {
     {
         return $this->shell->exec("dfs -$cmd", $args);
     }
+
     /**
-     * @param string|file $content Text content or path to file in local file system
+     * @param string $content Text content or path to file in local file system
      * @param string $filePath
      * @return mixed
+     * @throws \Exception
      */
-    public function writeToFile($content, $filePath) {
+    public function writeToFile($content, $filePath)
+    {
         if (is_file($content)) {
             return $this->exec('put', array($content, $filePath));
         }
@@ -59,7 +63,8 @@ class FileSystem {
      * @param string $hdfsFilePath
      * @return mixed
      */
-    public function moveFromLocal($localFilePath, $hdfsFilePath) {
+    public function moveFromLocal($localFilePath, $hdfsFilePath)
+    {
         return $this->exec('moveFromLocal', array($localFilePath, $hdfsFilePath));
     }
 
@@ -68,7 +73,8 @@ class FileSystem {
      * @param string $localFilePath
      * @return mixed
      */
-    public function copyToLocal($hdfsFilePath, $localFilePath) {
+    public function copyToLocal($hdfsFilePath, $localFilePath)
+    {
         return $this->exec('get', array($hdfsFilePath, $localFilePath));
     }
 
@@ -77,7 +83,8 @@ class FileSystem {
      * @param bool $recursive
      * @return mixed
      */
-    public function remove($hdfsPath, $recursive = false) {
+    public function remove($hdfsPath, $recursive = false)
+    {
         return $this->exec($recursive ? 'rmr' : 'rm', $hdfsPath);
     }
 
@@ -85,7 +92,9 @@ class FileSystem {
      * @param string $hdfsFilePath
      * @return string
      */
-    public function displayFileContent($hdfsFilePath) {
+    public function displayFileContent($hdfsFilePath)
+    {
         return $this->exec('cat', $hdfsFilePath);
     }
+
 }

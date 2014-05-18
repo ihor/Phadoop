@@ -2,8 +2,8 @@
 
 namespace WordHistogram;
 
-class Reducer extends \Phadoop\MapReduce\Job\Worker\Reducer {
-
+class Reducer extends \Phadoop\MapReduce\Job\Worker\Reducer
+{
     /**
      * @param string $key
      * @param \Traversable $values
@@ -17,4 +17,5 @@ class Reducer extends \Phadoop\MapReduce\Job\Worker\Reducer {
 
         $this->emit($key, $sum);
     }
+
 }

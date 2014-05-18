@@ -5,8 +5,8 @@
 
 namespace Phadoop\MapReduce;
 
-class Shell {
-
+class Shell
+{
     /**
      * Path to the Hadoop
      *
@@ -17,23 +17,26 @@ class Shell {
     /**
      * @param string $hadoopPath Path
      */
-    public function __construct($hadoopPath) {
+    public function __construct($hadoopPath)
+    {
         $this->hadoopPath = (string) $hadoopPath;
     }
 
     /**
      * @return string
      */
-    public function getHadoopPath() {
+    public function getHadoopPath()
+    {
         return $this->hadoopPath;
     }
 
     /**
      * @param string $cmd
      * @param array|string $args
-     * @return mix
+     * @return mixed
      */
-    public function exec($cmd, $args) {
+    public function exec($cmd, $args)
+    {
         return system("{$this->prepareCmd($cmd)} {$this->prepareCmdArgs($args)}");
     }
 
@@ -77,4 +80,5 @@ class Shell {
 
         return trim($result);
     }
+
 }

@@ -5,8 +5,8 @@
 
 namespace Phadoop;
 
-class MapReduce {
-
+class MapReduce
+{
     /**
      * Path to the Hadoop
      * 
@@ -27,7 +27,8 @@ class MapReduce {
     /**
      * @param string $hadoopPath Path to the Hadoop
      */
-    public function __construct($hadoopPath) {
+    public function __construct($hadoopPath)
+    {
         $this->hadoopPath = (string) $hadoopPath;
         $this->shell = new MapReduce\Shell($this->hadoopPath);
         $this->fileSystem = new MapReduce\FileSystem($this->shell);
@@ -38,7 +39,9 @@ class MapReduce {
      * @param string $jobCacheDir
      * @return \Phadoop\MapReduce\Job
      */
-    public function createJob($jobName, $jobCacheDir) {
+    public function createJob($jobName, $jobCacheDir)
+    {
         return new MapReduce\Job($jobName, $this->shell, $this->fileSystem, $jobCacheDir);
     }
+
 }

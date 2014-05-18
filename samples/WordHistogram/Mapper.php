@@ -2,8 +2,8 @@
 
 namespace WordHistogram;
 
-class Mapper extends \Phadoop\MapReduce\Job\Worker\Mapper {
-
+class Mapper extends \Phadoop\MapReduce\Job\Worker\Mapper
+{
     /**
      * @param string $key
      * @param mixed $value
@@ -17,4 +17,5 @@ class Mapper extends \Phadoop\MapReduce\Job\Worker\Mapper {
             $this->emit($word, 1);
         }
     }
+
 }

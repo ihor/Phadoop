@@ -9,8 +9,8 @@ namespace Phadoop\MapReduce\Job\Worker\Reducer;
  * Input iterator for reducer
  * Iterates to the next input key
  */
-class InputIterator implements \Iterator {
-
+class InputIterator implements \Iterator
+{
     /**
      * @var \Phadoop\MapReduce\Job\IO\Reader
      */
@@ -34,7 +34,8 @@ class InputIterator implements \Iterator {
     /**
      * @param \Phadoop\MapReduce\Job\IO\Reader $reader
      */
-    public function __construct(\Phadoop\MapReduce\Job\IO\Reader $reader) {
+    public function __construct(\Phadoop\MapReduce\Job\IO\Reader $reader)
+    {
         $this->setReader($reader);
         $this->next();
         $this->reset();
@@ -44,7 +45,8 @@ class InputIterator implements \Iterator {
      * @param \Phadoop\MapReduce\Job\IO\Reader $reader
      * @return \Phadoop\MapReduce\Job\Worker\Reducer\InputIterator
      */
-    private function setReader(\Phadoop\MapReduce\Job\IO\Reader $reader) {
+    private function setReader(\Phadoop\MapReduce\Job\IO\Reader $reader)
+    {
         $this->reader = $reader;
         return $this;
     }
@@ -54,7 +56,8 @@ class InputIterator implements \Iterator {
      *
      * @return void
      */
-    public function reset() {
+    public function reset()
+    {
         $this->previousKey = $this->currentKey;
     }
 
@@ -63,14 +66,16 @@ class InputIterator implements \Iterator {
      *
      * @return bool
      */
-    public function isIterated() {
+    public function isIterated()
+    {
         return is_null($this->currentKey);
     }
     
     /**
      * @return mixed
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->currentValue;
     }
 
@@ -79,7 +84,8 @@ class InputIterator implements \Iterator {
      * 
      * @return mixed
      */
-    public function current() {
+    public function current()
+    {
         return $this->currentValue;
     }
 
@@ -88,7 +94,8 @@ class InputIterator implements \Iterator {
      * 
      * @return string
      */
-    public function key() {
+    public function key()
+    {
         if (is_null($this->currentKey)) {
             return null;
         }
@@ -99,7 +106,8 @@ class InputIterator implements \Iterator {
     /**
      * @return void
      */
-    public function next() {
+    public function next()
+    {
         $this->currentKey = null;
         $this->currentValue = null;
 
@@ -119,7 +127,9 @@ class InputIterator implements \Iterator {
      *
      * @return bool
      */
-    public function valid() {
+    public function valid()
+    {
         return $this->currentKey == $this->previousKey;
     }
+
 }

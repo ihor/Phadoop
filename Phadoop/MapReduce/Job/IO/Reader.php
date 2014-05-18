@@ -5,12 +5,13 @@
 
 namespace Phadoop\MapReduce\Job\IO;
 
-class Reader {
-
+class Reader
+{
     /**
      * @return \Phadoop\MapReduce\Job\IO\Data\Input|false
      */
-    public static function read() {
+    public static function read()
+    {
         $line = fgets(STDIN);
         if ($line !== false) {
             return Data\Input::createFromString(trim($line));
@@ -18,4 +19,5 @@ class Reader {
 
         return false;
     }
+
 }

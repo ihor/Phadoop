@@ -5,8 +5,8 @@
 
 namespace Phadoop\MapReduce\Job\IO;
 
-class Emitter {
-
+class Emitter
+{
     /**
      * @var \Phadoop\MapReduce\Job\IO\Data\Output
      */
@@ -17,7 +17,8 @@ class Emitter {
      * @param mixed $value
      * @return void
      */
-    public function emit($key, $value) {
+    public function emit($key, $value)
+    {
         $output = Data\Output::create($key, $value);
         echo $output . "\n";
 
@@ -27,7 +28,9 @@ class Emitter {
     /**
      * @return \Phadoop\MapReduce\Job\IO\Data\Output
      */
-    public function getLast() {
+    public function getLast()
+    {
         return $this->last;
     }
+
 }

@@ -2,8 +2,8 @@
 
 namespace WordHistogramWithSorting;
 
-class HistogramReducer extends \Phadoop\MapReduce\Job\Worker\Reducer {
-
+class HistogramReducer extends \Phadoop\MapReduce\Job\Worker\Reducer
+{
     /**
      * @param string $word
      * @param \Traversable $counts
@@ -17,4 +17,5 @@ class HistogramReducer extends \Phadoop\MapReduce\Job\Worker\Reducer {
 
         $this->emit($word, $sum);
     }
+
 }

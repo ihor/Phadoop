@@ -8,8 +8,8 @@ namespace Phadoop\MapReduce;
 /**
  * @see http://hadoop.apache.org/common/docs/r0.15.2/streaming.html
  */
-class Job {
-
+class Job
+{
     /**
      * @var string
      */
@@ -76,8 +76,10 @@ class Job {
      * @param \Phadoop\MapReduce\FileSystem $fileSystem
      * @param string $cacheDir
      * @return \Phadoop\MapReduce\Job
+     * @throws \InvalidArgumentException
      */
-    public function __construct($name, Shell $shell, FileSystem $fileSystem, $cacheDir) {
+    public function __construct($name, Shell $shell, FileSystem $fileSystem, $cacheDir)
+    {
         if (empty($name)) {
             throw new \InvalidArgumentException("Job name can't be empty");
         }
@@ -95,7 +97,8 @@ class Job {
      * @param string $cacheDir
      * @return \Phadoop\MapReduce\Job
      */
-    private function setCacheDir($cacheDir) {
+    private function setCacheDir($cacheDir)
+    {
         if (!file_exists($cacheDir)) {
             mkdir($cacheDir, 0777);
         }
@@ -111,7 +114,8 @@ class Job {
      * @param \Phadoop\MapReduce\Job\Worker\Mapper $mapper
      * @return \Phadoop\MapReduce\Job
      */
-    public function setMapper(Job\Worker\Mapper $mapper) {
+    public function setMapper(Job\Worker\Mapper $mapper)
+    {
         $this->mapper = $mapper;
         return $this;
     }
@@ -120,7 +124,8 @@ class Job {
      * @param \Phadoop\MapReduce\Job\Worker\Reducer $reducer
      * @return \Phadoop\MapReduce\Job
      */
-    public function setReducer(Job\Worker\Reducer $reducer) {
+    public function setReducer(Job\Worker\Reducer $reducer)
+    {
         $this->reducer = $reducer;
         return $this;
     }
@@ -129,7 +134,8 @@ class Job {
      * @param \Phadoop\MapReduce\Job\Worker $combiner
      * @return \Phadoop\MapReduce\Job
      */
-    public function setCombiner(Job\Worker $combiner) {
+    public function setCombiner(Job\Worker $combiner)
+    {
         $this->combiner = $combiner;
         return $this;
     }
@@ -137,14 +143,16 @@ class Job {
     /**
      * @return bool
      */
-    private function hasCombiner() {
+    private function hasCombiner()
+    {
         return !is_null($this->combiner);
     }
 
     /**
      * @return \Phadoop\MapReduce\Job
      */
-    public function clearData() {
+    public function clearData()
+    {
         $this->fileSystem->remove($this->name, true);
         return $this;
     }
@@ -154,7 +162,8 @@ class Job {
      * @param mixed $data If empty then key is data
      * @return \Phadoop\MapReduce\Job
      */
-    public function addTask($key, $data = null) {
+    public function addTask($key, $data = null)
+    {
         if (is_null($data)) {
             $data = $key;
             $key = null;
@@ -177,7 +186,8 @@ class Job {
      * @param string $localFilePath
      * @return string
      */
-    private function prepareTaskFromFile($key, $localFilePath) {
+    private function prepareTaskFromFile($key, $localFilePath)
+    {
         $tasksDir = "{$this->cacheDir}/Tasks";
         if (!is_dir($tasksDir)) {
             mkdir($tasksDir);
@@ -193,14 +203,16 @@ class Job {
     /**
      * @return string
      */
-    private function getHdfsTasksDir() {
+    private function getHdfsTasksDir()
+    {
         return $this->name . '/tasks';
     }
 
     /**
      * @return string
      */
-    private function getHdfsResultsDir() {
+    private function getHdfsResultsDir()
+    {
         return $this->name . '/results';
     }
 
@@ -208,7 +220,8 @@ class Job {
      * @param string $localFilePath
      * @return \Phadoop\MapReduce\Job
      */
-    public function putResultsTo($localFilePath) {
+    public function putResultsTo($localFilePath)
+    {
         $this->resultsFileLocalPath = (string) $localFilePath;
         return $this;
     }
@@ -218,7 +231,8 @@ class Job {
      * @param string $value
      * @return \Phadoop\MapReduce\Job
      */
-    public function setStreamingOption($option, $value) {
+    public function setStreamingOption($option, $value)
+    {
         $this->streamingOptions[(string) $option] = (string) $value;
         return $this;
     }
@@ -226,7 +240,8 @@ class Job {
     /**
      * @return \Phadoop\MapReduce\Job
      */
-    public function run() {
+    public function run()
+    {
         $this->assertCacheDirIsSet();
         $this->assertMapperIsSet();
         $this->assertReducerIsSet();
@@ -264,7 +279,8 @@ class Job {
     /**
      * @return \Phadoop\MapReduce\Job\CodeGenerator
      */
-    private function getCodeGenerator() {
+    private function getCodeGenerator()
+    {
         if (is_null($this->_codeGenerator)) {
             $this->_codeGenerator = new Job\CodeGenerator();
         }
@@ -276,7 +292,8 @@ class Job {
      * @throws \UnexpectedValueException
      * @return void
      */
-    private function assertCacheDirIsSet() {
+    private function assertCacheDirIsSet()
+    {
         if (is_null($this->cacheDir)) {
             throw new \UnexpectedValueException("Cache dir isn't set");
         }
@@ -286,7 +303,8 @@ class Job {
      * @throws \UnexpectedValueException
      * @return void
      */
-    private function assertMapperIsSet() {
+    private function assertMapperIsSet()
+    {
         if (is_null($this->mapper)) {
             throw new \UnexpectedValueException("Mapper isn't set");
         }
@@ -296,7 +314,8 @@ class Job {
      * @throws \UnexpectedValueException
      * @return void
      */
-    private function assertReducerIsSet() {
+    private function assertReducerIsSet()
+    {
         if (is_null($this->reducer)) {
             throw new \UnexpectedValueException("Reducer isn't set");
         }
@@ -305,7 +324,8 @@ class Job {
     /**
      * @return string
      */
-    private function getHadoopStreamingJarPath() {
+    private function getHadoopStreamingJarPath()
+    {
         $streamingDirPath = "{$this->shell->getHadoopPath()}/contrib/streaming";
         return $streamingDirPath . '/' . system("ls $streamingDirPath | grep \"hadoop-streaming.*\.jar\"");
     }
@@ -314,14 +334,16 @@ class Job {
      * @todo Return all results
      * @return string
      */
-    private function getResultsFileHdfsPath() {
+    private function getResultsFileHdfsPath()
+    {
         return "{$this->getHdfsResultsDir()}/part-00000";
     }
 
     /**
      * @return \Phadoop\MapReduce\Job
      */
-    private function rememberResults() {
+    private function rememberResults()
+    {
         $resultsFile = $this->resultsFileLocalPath;
         if (is_null($resultsFile)) {
             $resultsFile = $this->cacheDir . '/Results.txt';
@@ -337,7 +359,9 @@ class Job {
     /**
      * @return string
      */
-    public function getLastResults() {
+    public function getLastResults()
+    {
         return $this->lastResults;
     }
+
 }

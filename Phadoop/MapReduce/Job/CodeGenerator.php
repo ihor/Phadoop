@@ -5,8 +5,8 @@
 
 namespace Phadoop\MapReduce\Job;
 
-class CodeGenerator {
-
+class CodeGenerator
+{
     /**
      * @var string
      */
@@ -18,6 +18,7 @@ class CodeGenerator {
     private $phadoopPath;
 
     /**
+     * @todo Replace this with a better solution
      * @var string
      */
     private $universalClassLoaderPath;
@@ -25,7 +26,8 @@ class CodeGenerator {
     /**
      * @throws \Exception
      */
-    public function __construct() {
+    public function __construct()
+    {
         if (!class_exists('\Symfony\Component\ClassLoader\UniversalClassLoader')) {
             throw new \Exception('Symfony UniversalClassLoader is needed');
         }
@@ -47,7 +49,8 @@ class CodeGenerator {
      * @param string $outputFile
      * @return void
      */
-    public function generateScript(Worker $worker, $outputFile) {
+    public function generateScript(Worker $worker, $outputFile)
+    {
         $script = file_get_contents("{$this->templatesPath}/CodeGenerator/Worker.php.tpl");
 
         $workerReflectionClass = new \ReflectionClass($worker);
@@ -70,4 +73,5 @@ class CodeGenerator {
         file_put_contents($outputFile, $script);
         chmod($outputFile, 0755); // Make the script executable
     }
+
 }

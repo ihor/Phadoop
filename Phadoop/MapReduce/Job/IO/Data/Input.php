@@ -5,13 +5,14 @@
 
 namespace Phadoop\MapReduce\Job\IO\Data;
 
-class Input extends \Phadoop\MapReduce\Job\IO\Data {
-
+class Input extends \Phadoop\MapReduce\Job\IO\Data
+{
     /**
      * @param string $inputString
-     * @return \Phadoop\MapReduce\Job\IO\Input
+     * @return \Phadoop\MapReduce\Job\IO\Data\Input
      */
-    public static function createFromString($inputString) {
+    public static function createFromString($inputString)
+    {
         $inputStringParts = explode(self::$delimiter, trim($inputString));
 
         if (count($inputStringParts) == 1) {
@@ -24,14 +25,17 @@ class Input extends \Phadoop\MapReduce\Job\IO\Data {
     /**
      * @return string
      */
-    public function getKey() {
+    public function getKey()
+    {
         return $this->key;
     }
 
     /**
-     * @return mix
+     * @return mixed
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
+
 }

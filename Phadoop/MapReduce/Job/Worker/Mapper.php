@@ -5,8 +5,8 @@
 
 namespace Phadoop\MapReduce\Job\Worker;
 
-abstract class Mapper extends \Phadoop\MapReduce\Job\Worker {
-
+abstract class Mapper extends \Phadoop\MapReduce\Job\Worker
+{
     /**
      * @abstract
      * @param string $key
@@ -18,9 +18,11 @@ abstract class Mapper extends \Phadoop\MapReduce\Job\Worker {
     /**
      * @return void
      */
-    public function handle() {
+    public function handle()
+    {
         while (($input = self::getReader()->read()) !== false) {
             $this->map($input->getKey(), $input->getValue());
         }
     }
+
 }

@@ -5,8 +5,8 @@
 
 namespace Phadoop\MapReduce\Job\Worker;
 
-abstract class Reducer extends \Phadoop\MapReduce\Job\Worker {
-
+abstract class Reducer extends \Phadoop\MapReduce\Job\Worker
+{
     /**
      * @abstract
      * @param string $key
@@ -18,7 +18,8 @@ abstract class Reducer extends \Phadoop\MapReduce\Job\Worker {
     /**
      * @return void
      */
-    public function handle() {
+    public function handle()
+    {
         $inputIterator = new Reducer\InputIterator($this->getReader());
         while (!$inputIterator->isIterated()) {
             $this->reduce($inputIterator->key(), $inputIterator);
@@ -31,4 +32,5 @@ abstract class Reducer extends \Phadoop\MapReduce\Job\Worker {
             $inputIterator->reset();
         }
     }
+
 }

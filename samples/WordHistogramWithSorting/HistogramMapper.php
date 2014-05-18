@@ -2,8 +2,8 @@
 
 namespace WordHistogramWithSorting;
 
-class HistogramMapper extends \Phadoop\MapReduce\Job\Worker\Mapper {
-
+class HistogramMapper extends \Phadoop\MapReduce\Job\Worker\Mapper
+{
     /**
      * @param string $key
      * @param mixed $value
@@ -17,4 +17,5 @@ class HistogramMapper extends \Phadoop\MapReduce\Job\Worker\Mapper {
             $this->emit($word, 1);
         }
     }
+
 }

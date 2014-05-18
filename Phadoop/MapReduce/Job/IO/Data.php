@@ -66,7 +66,7 @@ abstract class Data {
 
     /**
      * @param string $key
-     * @param mix $value
+     * @param mixed $value
      */
     protected function __construct($key, $value) {
         if (is_null($key)) {

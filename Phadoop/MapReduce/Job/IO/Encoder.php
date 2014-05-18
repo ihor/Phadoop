@@ -5,13 +5,14 @@
 
 namespace Phadoop\MapReduce\Job\IO;
 
-class Encoder {
-
+class Encoder
+{
     /**
      * @param mixed $data
      * @return string
      */
-    public static function encode($data) {
+    public static function encode($data)
+    {
         return json_encode($data);
     }
 
@@ -19,7 +20,9 @@ class Encoder {
      * @param string $data
      * @return mixed
      */
-    public static function decode($data) {
+    public static function decode($data)
+    {
         return json_decode(trim($data), true);
     }
+
 }
