@@ -3,12 +3,12 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job\IO;
+namespace Phadoop\MapReduce\Job\IO;
 
 class Emitter {
 
     /**
-     * @var \HadoopLib\Hadoop\Job\IO\Data\Output
+     * @var \Phadoop\MapReduce\Job\IO\Data\Output
      */
     private $last;
 
@@ -25,7 +25,7 @@ class Emitter {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job\IO\Data\Output
+     * @return \Phadoop\MapReduce\Job\IO\Data\Output
      */
     public function getLast() {
         return $this->last;

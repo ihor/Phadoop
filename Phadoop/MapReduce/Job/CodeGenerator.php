@@ -3,7 +3,7 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job;
+namespace Phadoop\MapReduce\Job;
 
 class CodeGenerator {
 
@@ -15,7 +15,7 @@ class CodeGenerator {
     /**
      * @var string
      */
-    private $hadoopLibPath;
+    private $phadoopPath;
 
     /**
      * @var string
@@ -38,12 +38,12 @@ class CodeGenerator {
 
         // Assuming that templates are in the same directory as the CodeGenerator
         $this->templatesPath = substr($thisPath, 0, strpos($thisPath, 'CodeGenerator.php'));
-        $this->hadoopLibPath = substr($thisPath, 0, strpos($thisPath, '/HadoopLib/'));
+        $this->phadoopPath = substr($thisPath, 0, strpos($thisPath, '/Phadoop/'));
     }
 
     /**
      * @todo Add restoring worker state with reflection
-     * @param \HadoopLib\Hadoop\Job\Worker $worker
+     * @param \Phadoop\MapReduce\Job\Worker $worker
      * @param string $outputFile
      * @return void
      */
@@ -60,9 +60,9 @@ class CodeGenerator {
         $workerFilePath = $workerReflectionClass->getFileName();
         $projectNamespacePath = substr($workerFilePath, 0, strpos($workerFilePath, "/$projectNamespaceName"));
 
-        $script = str_replace('%HadoopLibDebug%', defined('HADOOP_LIB_DEBUG') && HADOOP_LIB_DEBUG ? 'true' : 'false', $script);
+        $script = str_replace('%PhadoopMapReduceDebug%', defined('PHADOOP_MAPREDUCE_DEBUG') && PHADOOP_MAPREDUCE_DEBUG ? 'true' : 'false', $script);
         $script = str_replace('%UniversalClassLoaderPath%', $this->universalClassLoaderPath, $script);
-        $script = str_replace('%HadoopLibPath%', $this->hadoopLibPath, $script);
+        $script = str_replace('%PhadoopPath%', $this->phadoopPath, $script);
         $script = str_replace('%ProjectNamespaceName%', $projectNamespaceName, $script);
         $script = str_replace('%ProjectNamespacePath%', $projectNamespacePath, $script);
         $script = str_replace('%ProjectWorkerClassName%', $workerClassName, $script);

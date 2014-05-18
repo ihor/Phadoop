@@ -3,7 +3,7 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job\IO;
+namespace Phadoop\MapReduce\Job\IO;
 
 abstract class Data {
 
@@ -21,7 +21,7 @@ abstract class Data {
     protected static $delimiter = "\t";
 
     /**
-     * @var \HadoopLib\Hadoop\Job\IO\Encoder
+     * @var \Phadoop\MapReduce\Job\IO\Encoder
      */
     private static $_encoder;
 
@@ -36,7 +36,7 @@ abstract class Data {
 
     /**
      * @static
-     * @param \HadoopLib\Hadoop\Job\IO\Encoder $encoder
+     * @param \Phadoop\MapReduce\Job\IO\Encoder $encoder
      * @return void
      */
     public static function setEncoder(Encoder $encoder) {
@@ -44,7 +44,7 @@ abstract class Data {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job\IO\Encoder
+     * @return \Phadoop\MapReduce\Job\IO\Encoder
      */
     protected static function getEncoder() {
         if (is_null(self::$_encoder)) {

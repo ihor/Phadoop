@@ -3,14 +3,14 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job;
+namespace Phadoop\MapReduce\Job;
 
 class Debugger {
 
     /**
      * @static
-     * @param \HadoopLib\Hadoop\Job\Worker $worker
-     * @param \HadoopLib\Hadoop\Job\IO\Data\Output $output
+     * @param \Phadoop\MapReduce\Job\Worker $worker
+     * @param \Phadoop\MapReduce\Job\IO\Data\Output $output
      * @return void
      */
     public static function logEmit(Worker $worker, IO\Data\Output $output) {

@@ -2,7 +2,7 @@
 
 namespace WordHistogramWithSorting;
 
-class HistogramReducer extends \HadoopLib\Hadoop\Job\Worker\Reducer {
+class HistogramReducer extends \Phadoop\MapReduce\Job\Worker\Reducer {
 
     /**
      * @param string $word

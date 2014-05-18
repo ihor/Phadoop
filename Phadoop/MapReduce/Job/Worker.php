@@ -3,28 +3,28 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job;
+namespace Phadoop\MapReduce\Job;
 
 abstract class Worker {
 
     /**
-     * @var \HadoopLib\Hadoop\Job\IO\Reader
+     * @var \Phadoop\MapReduce\Job\IO\Reader
      */
     private static $_reader;
 
     /**
-     * @var \HadoopLib\Hadoop\Job\IO\Emitter
+     * @var \Phadoop\MapReduce\Job\IO\Emitter
      */
     private static $_emitter;
 
     /**
-     * @var \HadoopLib\Hadoop\Job\Worker\Debugger
+     * @var \Phadoop\MapReduce\Job\Worker\Debugger
      */
     private $_debugger;
 
     /**
      * @static
-     * @param \HadoopLib\Hadoop\Job\IO\Reader $reader
+     * @param \Phadoop\MapReduce\Job\IO\Reader $reader
      * @return void
      */
     public static function setReader(IO\Reader $reader) {
@@ -32,7 +32,7 @@ abstract class Worker {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job\IO\Reader
+     * @return \Phadoop\MapReduce\Job\IO\Reader
      */
     protected static function getReader() {
         if (is_null(self::$_reader)) {
@@ -44,7 +44,7 @@ abstract class Worker {
 
     /**
      * @static
-     * @param \HadoopLib\Hadoop\Job\IO\Emitter $emitter
+     * @param \Phadoop\MapReduce\Job\IO\Emitter $emitter
      * @return void
      */
     public static function setEmitter(IO\Emitter $emitter) {
@@ -52,7 +52,7 @@ abstract class Worker {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job\IO\Emitter
+     * @return \Phadoop\MapReduce\Job\IO\Emitter
      */
     private static function getEmitter() {
         if (is_null(self::$_emitter)) {
@@ -64,8 +64,8 @@ abstract class Worker {
 
     /**
      * @static
-     * @param \HadoopLib\Hadoop\Job\Debugger $debugger
-     * @return \HadoopLib\Hadoop\Job\Worker
+     * @param \Phadoop\MapReduce\Job\Debugger $debugger
+     * @return \Phadoop\MapReduce\Job\Worker
      */
     public function setDebugger(Debugger $debugger) {
         $this->_debugger = $debugger;
@@ -73,7 +73,7 @@ abstract class Worker {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job\Debugger
+     * @return \Phadoop\MapReduce\Job\Debugger
      */
     private function getDebugger() {
         if (is_null($this->_debugger)) {
@@ -87,11 +87,11 @@ abstract class Worker {
      * @return bool
      */
     private function isInDebugMode() {
-        return defined('HADOOP_LIB_DEBUG') && HADOOP_LIB_DEBUG;
+        return defined('PHADOOP_MAPREDUCE_DEBUG') && PHADOOP_MAPREDUCE_DEBUG;
     }
 
     /**
-     * @param \HadoopLib\Hadoop\Job\Worker $worker
+     * @param \Phadoop\MapReduce\Job\Worker $worker
      * @return bool
      */
     public function isEqualTo(Worker $worker) {

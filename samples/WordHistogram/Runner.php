@@ -5,15 +5,15 @@ namespace WordHistogram;
 require __DIR__ . '/../../vendor/autoload.php';
 
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
-$classLoader->registerNamespace('HadoopLib', '../../lib');
-$classLoader->registerNamespace('WordHistogram', '../');
+$classLoader->registerNamespace('Phadoop', __DIR__ . '/../..');
+$classLoader->registerNamespace('WordHistogram', __DIR__ . '/..');
 $classLoader->register();
 
-//define('HADOOP_LIB_DEBUG', true);
+//define('PHADOOP_MAPREDUCE_DEBUG', true);
 
-$hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
+$mr = new \Phadoop\MapReduce('/usr/local/Cellar/hadoop');
 
-$job = $hadoop->createJob('WordHistogram', 'Temp')
+$job = $mr->createJob('WordHistogram', 'Temp')
     ->setMapper(new Mapper())
     ->setReducer(new Reducer())
     ->clearData()

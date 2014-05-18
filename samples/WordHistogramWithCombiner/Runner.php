@@ -5,15 +5,15 @@ namespace WordHistogramWithCombiner;
 require __DIR__ . '/../../vendor/autoload.php';
 
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
-$classLoader->registerNamespace('HadoopLib', '../../lib');
-$classLoader->registerNamespace('WordHistogramWithCombiner', '../');
+$classLoader->registerNamespace('Phadoop', __DIR__ . '/../..');
+$classLoader->registerNamespace('WordHistogramWithCombiner', __DIR__ .  '/..');
 $classLoader->register();
 
-//define('HADOOP_LIB_DEBUG', true);
+//define('PHADOOP_MAPREDUCE_DEBUG', true);
 
-$hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
+$mr = new \Phadoop\MapReduce('/usr/local/Cellar/hadoop');
 
-$job = $hadoop->createJob('WordHistogramWithCombiner', 'Temp')
+$job = $mr->createJob('WordHistogramWithCombiner', 'Temp')
     ->setMapper(new Mapper())
     ->setReducer(new Reducer())
     ->setCombiner(new Combiner())

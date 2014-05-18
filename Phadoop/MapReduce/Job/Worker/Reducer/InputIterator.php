@@ -3,7 +3,7 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job\Worker\Reducer;
+namespace Phadoop\MapReduce\Job\Worker\Reducer;
 
 /**
  * Input iterator for reducer
@@ -12,7 +12,7 @@ namespace HadoopLib\Hadoop\Job\Worker\Reducer;
 class InputIterator implements \Iterator {
 
     /**
-     * @var \HadoopLib\Hadoop\Job\IO\Reader
+     * @var \Phadoop\MapReduce\Job\IO\Reader
      */
     private $reader;
 
@@ -32,19 +32,19 @@ class InputIterator implements \Iterator {
     private $currentValue;
 
     /**
-     * @param \HadoopLib\Hadoop\Job\IO\Reader $reader
+     * @param \Phadoop\MapReduce\Job\IO\Reader $reader
      */
-    public function __construct(\HadoopLib\Hadoop\Job\IO\Reader $reader) {
+    public function __construct(\Phadoop\MapReduce\Job\IO\Reader $reader) {
         $this->setReader($reader);
         $this->next();
         $this->reset();
     }
 
     /**
-     * @param \HadoopLib\Hadoop\Job\IO\Reader $reader
-     * @return \HadoopLib\Hadoop\Job\Worker\Reducer\InputIterator
+     * @param \Phadoop\MapReduce\Job\IO\Reader $reader
+     * @return \Phadoop\MapReduce\Job\Worker\Reducer\InputIterator
      */
-    private function setReader(\HadoopLib\Hadoop\Job\IO\Reader $reader) {
+    private function setReader(\Phadoop\MapReduce\Job\IO\Reader $reader) {
         $this->reader = $reader;
         return $this;
     }

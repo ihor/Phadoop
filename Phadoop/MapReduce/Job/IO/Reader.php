@@ -3,12 +3,12 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job\IO;
+namespace Phadoop\MapReduce\Job\IO;
 
 class Reader {
 
     /**
-     * @return \HadoopLib\Hadoop\Job\IO\Data\Input|false
+     * @return \Phadoop\MapReduce\Job\IO\Data\Input|false
      */
     public static function read() {
         $line = fgets(STDIN);

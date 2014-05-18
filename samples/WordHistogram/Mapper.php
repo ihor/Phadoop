@@ -2,7 +2,7 @@
 
 namespace WordHistogram;
 
-class Mapper extends \HadoopLib\Hadoop\Job\Worker\Mapper {
+class Mapper extends \Phadoop\MapReduce\Job\Worker\Mapper {
 
     /**
      * @param string $key

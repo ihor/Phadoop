@@ -3,7 +3,7 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop;
+namespace Phadoop\MapReduce;
 
 /**
  * @see http://hadoop.apache.org/common/docs/r0.20.0/hdfs_shell.html
@@ -11,12 +11,12 @@ namespace HadoopLib\Hadoop;
 class FileSystem {
 
     /**
-     * @var \HadoopLib\Hadoop\Shell
+     * @var \Phadoop\MapReduce\Shell
      */
     private $shell;
 
     /**
-     * @param \HadoopLib\Hadoop\Shell $shell
+     * @param \Phadoop\MapReduce\Shell $shell
      */
     public function __construct(Shell $shell) {
         $this->shell = $shell;

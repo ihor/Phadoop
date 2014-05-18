@@ -5,15 +5,15 @@ namespace WordHistogramWithSorting;
 require __DIR__ . '/../../vendor/autoload.php';
 
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
-$classLoader->registerNamespace('HadoopLib', '../../lib');
-$classLoader->registerNamespace('WordHistogramWithSorting', '../');
+$classLoader->registerNamespace('Phadoop', __DIR__ . '/../..');
+$classLoader->registerNamespace('WordHistogramWithSorting', __DIR__ . '/..');
 $classLoader->register();
 
-//define('HADOOP_LIB_DEBUG', true);
+//define('PHADOOP_MAPREDUCE_DEBUG', true);
 
-$hadoop = new \HadoopLib\Hadoop('/usr/local/Cellar/hadoop');
+$mr = new \Phadoop\MapReduce('/usr/local/Cellar/hadoop');
 
-$wordHistogramJob = $hadoop->createJob('WordHistogramWithSorting/HistogramStep', 'Temp/Histogram')
+$wordHistogramJob = $mr->createJob('WordHistogramWithSorting/HistogramStep', 'Temp/Histogram')
     ->setMapper(new HistogramMapper())
     ->setReducer(new HistogramReducer())
     ->setCombiner(new HistogramCombiner())
@@ -27,7 +27,7 @@ $wordHistogramJob = $hadoop->createJob('WordHistogramWithSorting/HistogramStep',
     ->putResultsTo('Temp/Results.txt')
     ->run();
 
-$sortingJob = $hadoop->createJob('WordHistogramWithSorting/SortingStep', 'Temp/Sorting')
+$sortingJob = $mr->createJob('WordHistogramWithSorting/SortingStep', 'Temp/Sorting')
     ->setMapper(new SortingMapper())
     ->setReducer(new SortingReducer())
     ->clearData()

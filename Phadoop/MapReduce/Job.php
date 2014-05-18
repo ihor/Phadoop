@@ -3,7 +3,7 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop;
+namespace Phadoop\MapReduce;
 
 /**
  * @see http://hadoop.apache.org/common/docs/r0.15.2/streaming.html
@@ -16,27 +16,27 @@ class Job {
     private $name;
 
     /**
-     * @var \HadoopLib\Hadoop\Shell
+     * @var \Phadoop\MapReduce\Shell
      */
     private $shell;
 
     /**
-     * @var \HadoopLib\Hadoop\FileSystem
+     * @var \Phadoop\MapReduce\FileSystem
      */
     private $fileSystem;
 
     /**
-     * @var \HadoopLib\Hadoop\Job\Worker\Mapper
+     * @var \Phadoop\MapReduce\Job\Worker\Mapper
      */
     private $mapper;
 
     /**
-     * @var \HadoopLib\Hadoop\Job\Worker\Reducer
+     * @var \Phadoop\MapReduce\Job\Worker\Reducer
      */
     private $reducer;
 
     /**
-     * @var \HadoopLib\Hadoop\Job\Worker
+     * @var \Phadoop\MapReduce\Job\Worker
      */
     private $combiner;
 
@@ -66,16 +66,16 @@ class Job {
     private $lastResults;
 
     /**
-     * @var \HadoopLib\Hadoop\Job\CodeGenerator
+     * @var \Phadoop\MapReduce\Job\CodeGenerator
      */
     private $_codeGenerator;
 
     /**
      * @param string $name
-     * @param \HadoopLib\Hadoop\Shell $shell
-     * @param \HadoopLib\Hadoop\FileSystem $fileSystem
+     * @param \Phadoop\MapReduce\Shell $shell
+     * @param \Phadoop\MapReduce\FileSystem $fileSystem
      * @param string $cacheDir
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     public function __construct($name, Shell $shell, FileSystem $fileSystem, $cacheDir) {
         if (empty($name)) {
@@ -93,7 +93,7 @@ class Job {
     /**
      * @throws \InvalidArgumentException
      * @param string $cacheDir
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     private function setCacheDir($cacheDir) {
         if (!file_exists($cacheDir)) {
@@ -108,8 +108,8 @@ class Job {
     }
 
     /**
-     * @param \HadoopLib\Hadoop\Job\Worker\Mapper $mapper
-     * @return \HadoopLib\Hadoop\Job
+     * @param \Phadoop\MapReduce\Job\Worker\Mapper $mapper
+     * @return \Phadoop\MapReduce\Job
      */
     public function setMapper(Job\Worker\Mapper $mapper) {
         $this->mapper = $mapper;
@@ -117,8 +117,8 @@ class Job {
     }
 
     /**
-     * @param \HadoopLib\Hadoop\Job\Worker\Reducer $reducer
-     * @return \HadoopLib\Hadoop\Job
+     * @param \Phadoop\MapReduce\Job\Worker\Reducer $reducer
+     * @return \Phadoop\MapReduce\Job
      */
     public function setReducer(Job\Worker\Reducer $reducer) {
         $this->reducer = $reducer;
@@ -126,8 +126,8 @@ class Job {
     }
 
     /**
-     * @param \HadoopLib\Hadoop\Job\Worker $combiner
-     * @return \HadoopLib\Hadoop\Job
+     * @param \Phadoop\MapReduce\Job\Worker $combiner
+     * @return \Phadoop\MapReduce\Job
      */
     public function setCombiner(Job\Worker $combiner) {
         $this->combiner = $combiner;
@@ -142,7 +142,7 @@ class Job {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     public function clearData() {
         $this->fileSystem->remove($this->name, true);
@@ -152,7 +152,7 @@ class Job {
     /**
      * @param string $key
      * @param mixed $data If empty then key is data
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     public function addTask($key, $data = null) {
         if (is_null($data)) {
@@ -206,7 +206,7 @@ class Job {
 
     /**
      * @param string $localFilePath
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     public function putResultsTo($localFilePath) {
         $this->resultsFileLocalPath = (string) $localFilePath;
@@ -216,7 +216,7 @@ class Job {
     /**
      * @param string $option
      * @param string $value
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     public function setStreamingOption($option, $value) {
         $this->streamingOptions[(string) $option] = (string) $value;
@@ -224,7 +224,7 @@ class Job {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     public function run() {
         $this->assertCacheDirIsSet();
@@ -262,7 +262,7 @@ class Job {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job\CodeGenerator
+     * @return \Phadoop\MapReduce\Job\CodeGenerator
      */
     private function getCodeGenerator() {
         if (is_null($this->_codeGenerator)) {
@@ -319,7 +319,7 @@ class Job {
     }
 
     /**
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     private function rememberResults() {
         $resultsFile = $this->resultsFileLocalPath;

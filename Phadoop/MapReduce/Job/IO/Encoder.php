@@ -3,7 +3,7 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job\IO;
+namespace Phadoop\MapReduce\Job\IO;
 
 class Encoder {
 

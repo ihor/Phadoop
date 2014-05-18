@@ -3,9 +3,9 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib;
+namespace Phadoop;
 
-class Hadoop {
+class MapReduce {
 
     /**
      * Path to the Hadoop
@@ -15,12 +15,12 @@ class Hadoop {
     private $hadoopPath;
 
     /**
-     * @var \HadoopLib\Hadoop\Shell
+     * @var \Phadoop\MapReduce\Shell
      */
     private $shell;
 
     /**
-     * @var \HadoopLib\Hadoop\FileSystem
+     * @var \Phadoop\MapReduce\FileSystem
      */
     private $fileSystem;
 
@@ -29,16 +29,16 @@ class Hadoop {
      */
     public function __construct($hadoopPath) {
         $this->hadoopPath = (string) $hadoopPath;
-        $this->shell = new Hadoop\Shell($this->hadoopPath);
-        $this->fileSystem = new Hadoop\FileSystem($this->shell);
+        $this->shell = new MapReduce\Shell($this->hadoopPath);
+        $this->fileSystem = new MapReduce\FileSystem($this->shell);
     }
 
     /**
      * @param string $jobName
      * @param string $jobCacheDir
-     * @return \HadoopLib\Hadoop\Job
+     * @return \Phadoop\MapReduce\Job
      */
     public function createJob($jobName, $jobCacheDir) {
-        return new Hadoop\Job($jobName, $this->shell, $this->fileSystem, $jobCacheDir);
+        return new MapReduce\Job($jobName, $this->shell, $this->fileSystem, $jobCacheDir);
     }
 }

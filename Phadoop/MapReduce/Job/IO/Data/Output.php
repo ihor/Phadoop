@@ -3,15 +3,15 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job\IO\Data;
+namespace Phadoop\MapReduce\Job\IO\Data;
 
-class Output extends \HadoopLib\Hadoop\Job\IO\Data {
+class Output extends \Phadoop\MapReduce\Job\IO\Data {
 
     /**
      * @static
      * @param string $key
      * @param mixed $value
-     * @return \HadoopLib\Hadoop\Job\IO\Output
+     * @return \Phadoop\MapReduce\Job\IO\Output
      */
     public static function create($key, $value) {
         return new self($key, $value);

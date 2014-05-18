@@ -3,13 +3,13 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job\IO\Data;
+namespace Phadoop\MapReduce\Job\IO\Data;
 
-class Input extends \HadoopLib\Hadoop\Job\IO\Data {
+class Input extends \Phadoop\MapReduce\Job\IO\Data {
 
     /**
      * @param string $inputString
-     * @return \HadoopLib\Hadoop\Job\IO\Input
+     * @return \Phadoop\MapReduce\Job\IO\Input
      */
     public static function createFromString($inputString) {
         $inputStringParts = explode(self::$delimiter, trim($inputString));

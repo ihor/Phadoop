@@ -3,7 +3,7 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop;
+namespace Phadoop\MapReduce;
 
 class Shell {
 

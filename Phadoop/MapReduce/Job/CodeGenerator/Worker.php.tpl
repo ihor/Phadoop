@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
 
-defined('HADOOP_LIB_DEBUG') || define('HADOOP_LIB_DEBUG', %HadoopLibDebug%);
+defined('PHADOOP_MAPREDUCE_DEBUG') || define('PHADOOP_MAPREDUCE_DEBUG', %PhadoopMapReduceDebug%);
 
 require_once '%UniversalClassLoaderPath%';
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
-$classLoader->registerNamespace('HadoopLib', '%HadoopLibPath%');
+$classLoader->registerNamespace('Phadoop', '%PhadoopPath%');
 $classLoader->registerNamespace('%ProjectNamespaceName%', '%ProjectNamespacePath%');
 $classLoader->register();
 

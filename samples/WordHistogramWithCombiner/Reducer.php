@@ -2,7 +2,7 @@
 
 namespace WordHistogramWithCombiner;
 
-class Reducer extends \HadoopLib\Hadoop\Job\Worker\Reducer {
+class Reducer extends \Phadoop\MapReduce\Job\Worker\Reducer {
 
     /**
      * @param string $key

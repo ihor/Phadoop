@@ -3,9 +3,9 @@
  * @author Ihor Burlachenko
  */
 
-namespace HadoopLib\Hadoop\Job\Worker;
+namespace Phadoop\MapReduce\Job\Worker;
 
-abstract class Reducer extends \HadoopLib\Hadoop\Job\Worker {
+abstract class Reducer extends \Phadoop\MapReduce\Job\Worker {
 
     /**
      * @abstract

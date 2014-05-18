@@ -2,7 +2,7 @@
 
 namespace WordHistogramWithSorting;
 
-class SortingMapper extends \HadoopLib\Hadoop\Job\Worker\Mapper {
+class SortingMapper extends \Phadoop\MapReduce\Job\Worker\Mapper {
 
     /**
      * @param string $word
