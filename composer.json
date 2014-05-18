@@ -1,5 +1,5 @@
 {
     "require": {
-        "symfony/symfony":  "2.*.*"
+        "symfony/symfony":  "2.4.*"
     }
 }
