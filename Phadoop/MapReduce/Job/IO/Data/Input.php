@@ -1,7 +1,4 @@
 <?php
-/**
- * @author Ihor Burlachenko
- */
 
 namespace Phadoop\MapReduce\Job\IO\Data;
 

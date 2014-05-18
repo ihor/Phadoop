@@ -1,7 +1,4 @@
 <?php
-/**
- * @author Ihor Burlachenko
- */
 
 namespace Phadoop\MapReduce\Job\IO\Data;
 
@@ -41,5 +38,4 @@ class Output extends \Phadoop\MapReduce\Job\IO\Data
     {
         return $this->key . self::$delimiter . self::getEncoder()->encode($this->value);
     }
-
 }
