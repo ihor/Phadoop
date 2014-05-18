@@ -2,7 +2,8 @@
 
 namespace WordHistogramWithSorting;
 
-require_once '../../lib/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+require __DIR__ . '/../../vendor/autoload.php';
+
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
 $classLoader->registerNamespace('HadoopLib', '../../lib');
 $classLoader->registerNamespace('WordHistogramWithSorting', '../');
