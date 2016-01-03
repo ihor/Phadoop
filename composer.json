@@ -1,5 +1,21 @@
 {
+    "name": "ihor/phadoop",
+    "description": "Simple library for writing map/reduce jobs for Hadoop in PHP",
+    "keywords": ["hadoop", "map", "reduce"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ihor Burlachenko",
+            "email": "ihor.burlachenko@gmail.com"
+        }
+    ],
     "require": {
-        "symfony/symfony":  "2.4.*"
+        "php": ">=5.3.0",
+        "symfony/symfony":  "~2"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
     }
 }
