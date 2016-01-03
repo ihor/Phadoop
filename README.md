@@ -1,15 +1,19 @@
 Phadoop
 =======
 
-Phadoop allows you to write map/reduce tasks for Hadoop in PHP. I created it to give a techtalk about Hadoop in the company I worked in. It is not ready for production use but can help you if you want to play with Hadoop and PHP.
+Phadoop allows you to write map/reduce tasks for Hadoop in PHP. I created it to give a techtalk about Hadoop in the company I worked in. It is not ready for production use yet but can help you to play with Hadoop in PHP.
 
 Installation
 ------------
-Install and set up Hadoop (find installation notes for your platform).
-
-Then go to repository root and execute
-```bash
-composer install
+Define the following requirement in your composer.json file:
+```
+"require": {
+    "ihor/phadoop": "0.1-dev"
+}
+```
+or simply execute the following in the command line:
+```
+composer require ihor/phadoop
 ```
 
 Usage
@@ -51,8 +55,4 @@ $job = $mr->createJob('WordCounter', 'Temp')
 echo $job->getLastResults();
 ```
 
-You can find more examples in the examples directory.
-
-Documentation
--------------
-Please follow the examples  to understand how Phadoop works. It is very easy to use.
+You can find more examples in the [examples](https://github.com/ihor/Phadoop/tree/master/examples) directory.
