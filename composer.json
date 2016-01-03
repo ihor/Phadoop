@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "symfony/symfony":  "~2"
+        "symfony/class-loader":  "~3"
     },
     "extra": {
         "branch-alias": {
