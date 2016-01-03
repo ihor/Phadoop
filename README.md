@@ -8,7 +8,7 @@ Installation
 Define the following requirement in your composer.json file:
 ```
 "require": {
-    "ihor/phadoop": "0.1-dev"
+    "ihor/phadoop": "0.1.x-dev"
 }
 ```
 or simply execute the following in the command line:
